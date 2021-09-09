@@ -1,0 +1,11 @@
+version: "3.9"
+services:
+  dev-box:
+    container_name: shopping-basket
+    build:
+      context: .
+      args:
+        - XDEBUG_IDEKEY
+      dockerfile: Dockerfile
+    volumes:
+        - ./:/app
