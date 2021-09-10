@@ -37,6 +37,7 @@ class ShoppingBasket
 
     protected function fillTransientBasket(): void
     {
+        $this->transient_basket = [];
         try {
             array_map(function ($item_code) {
                 $index = $this->searchItemInBasket($item_code);
@@ -103,15 +104,7 @@ class ShoppingBasket
         return $this->items_in_basket;
     }
 
-    public function getTotal(): int
-    {
-        $this->checkSetupValidity();
-        $this->fillTransientBasket();
-
-        return $this->getTransientBasketValue();
-    }
-
-    public function getTotalWithOffer(?Offer $offer = null): int | Exception
+    public function getTotal(?Offer $offer = null): int | Exception
     {
         if (is_null($this->offers) && is_null($offer)) {
             throw new Exception('No offers provided');
