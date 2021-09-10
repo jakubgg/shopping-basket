@@ -5,12 +5,14 @@ namespace Basket\Offers;
 class RedOffer implements Offer
 {
     
-    public function applyOffer(array $basket): array
-    {
-         return $this->applyRules($basket);
-    }
-
-    private function applyRules($basket): array
+    /**
+     * Provides logic for 'Buy one Red get second half price' offer.
+     *
+     * @param array $basket Basket with items to analyse and test for offer.
+     *
+     * @return array Basket with prices adjusted accordingto the offer rules.
+     */
+    private function applyRules(array $basket): array
     {
         $state = 0;
         $basket_with_offer = [];
@@ -20,11 +22,17 @@ class RedOffer implements Offer
                 $state += 1;
             }
             if ($state == 2) {
+                // round() by default uses 'rounds halves up'
                 $value = intval(round($value / 2));
             }
             $basket_with_offer[] = [$code => $value];
         });
         
         return $basket_with_offer;
+    }
+
+    public function applyOffer(array $basket): array
+    {
+         return $this->applyRules($basket);
     }
 }

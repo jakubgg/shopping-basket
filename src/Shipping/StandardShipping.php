@@ -7,7 +7,15 @@ use Exception;
 class StandardShipping implements Shipping
 {
 
-    private function shippingRules($price): int | Exception
+    /**
+     * Provides logic for Standard Shipping rules.
+     *
+     * @param int $price Price value in cents.
+     *
+     * @return int | Exception Returns value of shipping as integer in cents,
+     * or throws an Exception if cannot match the price.
+     */
+    private function shippingRules(int $price): int | Exception
     {
         if ($price === 0) {
             return 0;
