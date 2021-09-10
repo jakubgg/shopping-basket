@@ -117,6 +117,35 @@ final class ShoppingBasketTest extends TestCase
         $this->shopping_basket->add('R01');
         $this->assertEquals(495, $this->shopping_basket->getDelivery());
     }
+
+    public function testShippingRatesBelow90(): void
+    {
+        $this->shopping_basket->init(product_catalogue: $this->test_product, shipping_rates: new StandardShipping, offers: null);
+        $this->shopping_basket->add('R01')->add('R01');
+        $this->assertEquals(295, $this->shopping_basket->getDelivery());
+    }
+
+    public function testShippingRatesAbove90(): void
+    {
+        $this->shopping_basket->init(product_catalogue: $this->test_product, shipping_rates: new StandardShipping, offers: null);
+        $this->shopping_basket->add('R01')->add('R01')->add('R01')->add('R01');
+        $this->assertEquals(0, $this->shopping_basket->getDelivery());
+    }
+    
+    public function testShippingRatesEqual90(): void
+    {
+        $test_product = [
+            [
+                'product' =>'Red Widget',
+                'code' =>'R01',
+                'price' => 9000,
+            ],
+        ];
+        $this->shopping_basket->init(product_catalogue: $test_product, shipping_rates: new StandardShipping, offers: null);
+        $this->shopping_basket->add('R01');
+        $this->assertEquals(0, $this->shopping_basket->getDelivery());
+    }
+
     // getDelivery
     // getTotal
     // getTotalWithOffer
