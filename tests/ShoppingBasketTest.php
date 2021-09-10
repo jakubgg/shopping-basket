@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 namespace Tests;
 
+use Basket\Offers\RedOffer;
 use Basket\Shipping\StandardShipping;
 use Basket\ShoppingBasket;
-use Exception;
 use PHPUnit\Framework\TestCase;
 
 final class ShoppingBasketTest extends TestCase
@@ -78,7 +78,7 @@ final class ShoppingBasketTest extends TestCase
         $this->shopping_basket->init(product_catalogue: $this->products, shipping_rates: $shipping_stub, offers: null);
         $this->assertEquals(0, $this->shopping_basket->getBasketValue());
         $this->assertEquals(3295, $this->shopping_basket->add('R01')->getBasketValue());
-        $this->assertEquals(4090, $this->shopping_basket->add('R01')->add('B01')->getBasketValue());
+        $this->assertEquals(4090, $this->shopping_basket->add('B01')->getBasketValue());
         $this->assertEquals(6585, $this->shopping_basket->add('G01')->getBasketValue());
     }
 
@@ -146,7 +146,27 @@ final class ShoppingBasketTest extends TestCase
         $this->assertEquals(0, $this->shopping_basket->getDelivery());
     }
 
-    // getDelivery
-    // getTotal
-    // getTotalWithOffer
+    public function testTotalsAreCorrectB01G01(): void
+    {
+        $this->shopping_basket->init(product_catalogue: $this->products, shipping_rates: new StandardShipping, offers: new RedOffer);
+        $this->assertEquals(3785, $this->shopping_basket->add('B01')->add('G01')->getTotal());
+    }
+
+    public function testTotalsAreCorrectR01R01(): void
+    {
+        $this->shopping_basket->init(product_catalogue: $this->products, shipping_rates: new StandardShipping, offers: new RedOffer);
+        $this->assertEquals(5437, $this->shopping_basket->add('R01')->add('R01')->getTotal());
+    }
+
+    public function testTotalsAreCorrectR01G01(): void
+    {
+        $this->shopping_basket->init(product_catalogue: $this->products, shipping_rates: new StandardShipping, offers: new RedOffer);
+        $this->assertEquals(6085, $this->shopping_basket->add('R01')->add('G01')->getTotal());
+    }
+
+    public function testTotalsAreCorrectB01B01R01R01R01(): void
+    {
+        $this->shopping_basket->init(product_catalogue: $this->products, shipping_rates: new StandardShipping, offers: new RedOffer);
+        $this->assertEquals(9827, $this->shopping_basket->add('B01')->add('B01')->add('R01')->add('R01')->add('R01')->getTotal());
+    }
 }
