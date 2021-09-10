@@ -87,6 +87,7 @@ class ShoppingBasket
     
     public function getDelivery(): int
     {
+        $this->fillTransientBasket();
         $shipping = $this->shipping_rates->getShipping($this->getTransientBasketValue());
         return $shipping;
     }
