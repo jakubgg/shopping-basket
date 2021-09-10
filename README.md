@@ -58,6 +58,7 @@ To use the project without Docker you need the correct version of PHP installed,
 
 Clone the project from Github. 
 ```
+git clone https://github.com/jakubgg/shopping-basket.git
 ```
 
 Run `composer install` in the project folder,  that will install all project requirements. 
