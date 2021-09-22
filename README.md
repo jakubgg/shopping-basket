@@ -1,4 +1,4 @@
-[![CircleCI](https://circleci.com/gh/jakubgg/shopping-basket/tree/circleci-project-setup.svg?style=shield)](https://circleci.com/gh/jakubgg/shopping-basket/tree/main)
+[![CircleCI](https://circleci.com/gh/jakubgg/shopping-basket/tree/main.svg?style=shield)](https://circleci.com/gh/jakubgg/shopping-basket/tree/main)
 
 # Shopping Basket PoC for Acme Widget Co
 
