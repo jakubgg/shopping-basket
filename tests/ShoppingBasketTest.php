@@ -155,7 +155,7 @@ final class ShoppingBasketTest extends TestCase
     public function testTotalsAreCorrectR01R01(): void
     {
         $this->shopping_basket->init(product_catalogue: $this->products, shipping_rates: new StandardShipping, offers: new RedOffer);
-        $this->assertEquals(5437, $this->shopping_basket->add('R01')->add('R01')->getTotal());
+        $this->assertEquals(5438, $this->shopping_basket->add('R01')->add('R01')->getTotal());
     }
 
     public function testTotalsAreCorrectR01G01(): void
@@ -167,6 +167,6 @@ final class ShoppingBasketTest extends TestCase
     public function testTotalsAreCorrectB01B01R01R01R01(): void
     {
         $this->shopping_basket->init(product_catalogue: $this->products, shipping_rates: new StandardShipping, offers: new RedOffer);
-        $this->assertEquals(9827, $this->shopping_basket->add('B01')->add('B01')->add('R01')->add('R01')->add('R01')->getTotal());
+        $this->assertEquals(9828, $this->shopping_basket->add('B01')->add('B01')->add('R01')->add('R01')->add('R01')->getTotal());
     }
 }
