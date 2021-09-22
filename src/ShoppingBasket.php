@@ -171,20 +171,19 @@ class ShoppingBasket
 
     /**
      * Gathers all parts, smashes them together and returns grand total with offers and shipping applied.
-     * Allows to inject `Offer` at the last moment, if the offer was ommited from init().
+     * Allows to inject `Offer` at the last moment, if the offer was ommited from the init().
      * Must be last in the chain of commands.
      *
      * @return int Value of all items with Shipping and Offer applied, in cents.
      */
-    public function getTotal(?Offer $offer = null): int | Exception
+    public function getTotal(?Offer $offer = null): int
     {
-        if (is_null($this->offers) && is_null($offer)) {
-            throw new Exception('No offers provided');
-        }
-
         $this->checkSetupValidity();
         $this->fillTransientBasket();
-        $this->transient_basket = $this->offers->applyOffer($this->transient_basket);
+        if (!is_null($this->offers) || !is_null($offer)) {
+            $this->transient_basket = $this->offers->applyOffer($this->transient_basket);
+        }
+        
         $basket_value = $this->getTransientBasketValue();
         $delivery = $this->getDelivery();
         
